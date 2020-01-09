@@ -60,7 +60,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-// 将 ui 组件包装成容器组件
 export default connect(
   mapStateToProps,
   mapDispatchToProps
