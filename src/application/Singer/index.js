@@ -8,10 +8,13 @@ import Scroll from "../../baseUI/scroll/index";
 import SongsList from "../SongList";
 import { connect } from "react-redux";
 import Loading from "./../../baseUI/loading/index";
+import MusicNote from "../../baseUI/music-note/index";
 import { getSingerInfo, changeEnterLoading } from "./store/actionCreators";
 
 function Singer(props) {
   const initialHeight = useRef(0);
+  const musicNoteRef = useRef();
+
   const [showStatus, setShowStatus] = useState(true);
 
   const { artist: immutableArtist, songs: immutableSongs, loading } = props;
@@ -42,6 +45,10 @@ function Singer(props) {
     songScroll.current.refresh();
     // eslint-disable-next-line
   }, []);
+
+  const musicAnimation = (x, y) => {
+    musicNoteRef.current.startAnimation({ x, y });
+  };
 
   const handleScroll = useCallback(pos => {
     let height = initialHeight.current;
@@ -111,10 +118,15 @@ function Singer(props) {
         <BgLayer ref={layer}></BgLayer>
         <SongListWrapper ref={songScrollWrapper}>
           <Scroll ref={songScroll} onScroll={handleScroll}>
-            <SongsList songs={songs} showCollect={false}></SongsList>
+            <SongsList
+              songs={songs}
+              showCollect={false}
+              musicAnimation={musicAnimation}
+            ></SongsList>
           </Scroll>
         </SongListWrapper>
         {loading ? <Loading></Loading> : null}
+        <MusicNote ref={musicNoteRef}></MusicNote>
       </Container>
     </CSSTransition>
   );

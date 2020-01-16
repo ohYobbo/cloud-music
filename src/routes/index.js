@@ -39,7 +39,7 @@ export default [
         ]
       },
       {
-        path: "/rank/",
+        path: "/rank",
         component: Rank,
         key: "rank",
         routes: [
